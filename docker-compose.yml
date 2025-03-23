@@ -21,6 +21,7 @@ services:
             - '.:/var/www/html'
         networks:
             - sail
+            - local-dev
         depends_on:
             - mysql
             - redis
@@ -29,6 +30,7 @@ services:
             - selenium
     mysql:
         image: 'mysql/mysql-server:8.0'
+        platform: 'linux/amd64'
         ports:
             - '${FORWARD_DB_PORT:-3306}:3306'
         environment:
@@ -103,6 +105,8 @@ services:
 networks:
     sail:
         driver: bridge
+    local-dev: # this is the nginx-proxy-manager network
+        external: true
 volumes:
     sail-mysql:
         driver: local
