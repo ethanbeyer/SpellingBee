@@ -80,10 +80,10 @@ class Word extends Model
 
     /**
      * Mutator to always store words in uppercase
-     * @param [type] $value [description]
+     * @param string
      */
-    public function setWordAttribute(string $value)
+    public function setWordAttribute(string $word)
     {
-        $this->attributes['word'] = strtoupper($value);
+        $this->attributes['word'] = strtoupper($word);
     }
 }
