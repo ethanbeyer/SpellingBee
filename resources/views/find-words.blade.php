@@ -33,7 +33,7 @@
                         </h2>
                         <div id="collapse-all-letters" class="accordion-collapse collapse" data-bs-parent="#all_words_accordion">
                             <div class="accordion-body">
-                                <ul class="row row-cols-2 row-cols-lg-4">
+                                <ul class="column-list list-unstyled">
                                     @foreach($all_words->pluck('word') as $word)
                                         <li>{{ $word }}</li>
                                     @endforeach
@@ -59,7 +59,7 @@
                             </h2>
                             <div id="collapse-{{ $letter }}" class="accordion-collapse collapse" data-bs-parent="#required_letter_accordions">
                                 <div class="accordion-body">
-                                    <ul class="row row-cols-4 row-cols-xs-2">
+                                    <ul class="column-list list-unstyled">
                                         @foreach($letter_group['words'] as $word)
                                             <li>{{ $word }}</li>
                                         @endforeach
@@ -72,8 +72,21 @@
  
             </div>
         </div>
-
     </div>
+
+    {{-- Better Styles --}}
+    <style>
+        .column-list {
+            column-count: 2;
+            column-gap: 20px;
+        }
+
+        @media screen and (min-width:992px) {
+            .column-list {
+                column-count: 4;
+            }
+        }
+    </style>
 
     {{-- JS --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>

@@ -30,11 +30,17 @@ class WordController extends Controller
         // all the words that match these letters
         $all_words = Word::whereRaw("BINARY word REGEXP '^[{$letters}]+$'")->get();
 
+        // sorting
+        $sorted_all_words = $all_words->sortBy([
+            ['score', 'desc'],
+            ['word', 'asc'],
+        ]);
+
         // letter-by-letter breakdowns
         foreach($letters_array as $letter) {
 
             // get the words from the list that contain this letter
-            $words_with_this_letter = $all_words->filter(function(Word $value, int $key) use ($letter) {
+            $words_with_this_letter = $sorted_all_words->filter(function(Word $value, int $key) use ($letter) {
                 return str_contains($value->word, $letter);
             });
             
@@ -52,7 +58,7 @@ class WordController extends Controller
         // data for the view
         $data = [
             'letters' => $letters_array,
-            'all_words' => $all_words,
+            'all_words' => $sorted_all_words,
             'word_breakdown' => $word_breakdown
         ];
 
