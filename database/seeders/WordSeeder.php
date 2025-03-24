@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Jobs\ImportWordsJob;
+use App\Models\Word;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Bus;

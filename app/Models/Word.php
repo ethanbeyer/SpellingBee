@@ -62,8 +62,8 @@ class Word extends Model
     public static function prepare(string $word)
     {
         $word = strtoupper(trim($word)); // Ensure uppercase and remove spaces
-        $length = strlen($word);
-        $unique_letters = count(array_unique(str_split($word))); // Count unique letters
+        $length = Word::length($word);
+        $unique_letters = Word::letters($word); // Count unique letters
 
         if ($length < 5 || $length > 15 || $unique_letters > 7) {
             return false; // Word does not meet criteria
