@@ -1,0 +1,15 @@
+PASTEPAGE
+
+$letters = strtoupper('abcdefg');  // Ensure uppercase input
+$requiredLetter = 'C';
+
+$words = Word::where('word', 'LIKE', "%{$requiredLetter}%")
+    ->whereRaw("word NOT REGEXP '[^$letters]'")
+    ->get();
+
+
+QUESTIONS
+
+
+
+https://github.com/ConsoleTVs/Profanity
