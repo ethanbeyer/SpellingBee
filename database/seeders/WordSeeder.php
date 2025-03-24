@@ -16,7 +16,7 @@ class WordSeeder extends Seeder
      */
     public function run(): void
     {
-        $word_list_filepath = storage_path('full-dictionary2.txt');
+        $word_list_filepath = storage_path('full-dictionary-20k-tiny.txt');
 
         if (!file_exists($word_list_filepath)) {
             $this->command->error("Word list file not found: $word_list_filepath");
