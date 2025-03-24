@@ -15,21 +15,6 @@ class WordController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.
@@ -39,27 +24,27 @@ class WordController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Word $word)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Word $word)
+    public function find_words(string $letters)
     {
-        //
-    }
+        // always uppercase...
+        $letters = strtoupper($letters);
+        $letters_array = str_split($letters);
+        
+        // first make sure all the letters are unique
+        $unique_letters = count(array_unique($letters_array));
+        if($unique_letters !== 7) {
+            return "There must be 7 Unique Letters.";
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Word $word)
-    {
-        //
+        // all the words that match these letters
+        $words = Word::whereRaw("BINARY word REGEXP '^[{$letters}]+$'")->get();
+
+
+        $data = [
+            'all_words' => $words,
+        ];
+
+        return view('find-words')->with($data);
     }
 }
