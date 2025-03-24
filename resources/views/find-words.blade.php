@@ -8,3 +8,6 @@ You made it here!
     @endforeach
 </ul>
 
+@foreach($word_breakdown as $letter => $stats)
+    {{ dump($letter, $stats) }}
+@endforeach
