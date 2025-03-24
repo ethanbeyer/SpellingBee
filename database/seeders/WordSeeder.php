@@ -37,11 +37,17 @@ class WordSeeder extends Seeder
 
             // logic here matches the Word model - inserts bypass Model events.
             $word = strtoupper($word);
+            $letters = count(array_unique(str_split($word)));
             $length = strlen($word);
             $score = ($length < 5) ? 1 : $length;
 
             // full list of words to import
-            $data[] = ['word' => $word, 'length' => $length, 'score' => $score];
+            $data[] = [
+                'word' => $word,
+                'letters' => $letters,
+                'length' => $length,
+                'score' => $score
+            ];
 
             if (count($data) >= $batch_size) {
                 $jobs[] = new ImportWordsJob($data);

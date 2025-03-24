@@ -14,8 +14,11 @@ return new class extends Migration
         Schema::create('words', function (Blueprint $table) {
             $table->id();
 
-            // will contain the word itself
+            // will contain the word itself.
             $table->text('word');
+
+            // will contain the number of unique letters that make up the word.
+            $table->integer('letters');
 
             // will contain the number of letters in the word.
             $table->integer('length');

@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Word extends Model
 {
-    // fillable columns
-    protected $fillable = ['word', 'length', 'score'];
+    // mass-fillable columns
+    protected $fillable = ['word', 'letters', 'length', 'score'];
 
 
     /**
@@ -19,6 +19,7 @@ class Word extends Model
 
         // attributes to determine before saving a new word to the DB
         static::creating(function($word) {
+            $word->letters = count(array_unique(str_split($word->word)));
             $word->length = strlen($word->word);
 
             // if it's less than 5 letters, 1 point
