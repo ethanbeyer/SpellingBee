@@ -7,24 +7,7 @@ use Illuminate\Http\Request;
 
 class WordController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Word $word)
-    {
-        //
-    }
-
-
+    
     public function find_words(string $letters)
     {
         // always uppercase...
