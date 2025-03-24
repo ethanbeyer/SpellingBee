@@ -1,5 +1,14 @@
 # README
 
+# Technologies Used
+
+- Laravel 12
+- PHP 8.4
+- MySQL 5.7
+- Docker
+- HTML
+- CSS
+
 ## Idea
 
 Upon the assignment of a code project, my mind first went to a thing I use every day: the NYT Spelling Bee game.
@@ -20,6 +29,7 @@ I want to codify that.
         - Drop the words that are unneeded
             - any words with a length < 4
             - any words with a letter count > 7
+            - any words with a letter count > 15
     - Helper Functions/Classes
 
 - Front End
