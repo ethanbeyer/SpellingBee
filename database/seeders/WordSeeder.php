@@ -24,22 +24,21 @@ class WordSeeder extends Seeder
 
         $data = [];
         $jobs = [];
+        $skipped_words = [];
         $batch_size = 5000;
 
+        // go through the given word list line by line
         $handle = fopen($word_list_filepath, 'r');
         while (($word = fgets($handle)) !== false) {
-            $word = trim($word);
+            $word = Word::prepare($word);
 
-            // first determine if we should do anything with this word
-            // is it long enough (4 letters or more)?
-            // can it be made with only 7 letters?
-            if($this->word_is_eligible($word) === false) continue;
+            // if the prepare() method returns false, don't do anything with this word.
+            if($word === false) continue;
 
             // logic here matches the Word model - inserts bypass Model events.
-            $word = strtoupper($word);
-            $letters = count(array_unique(str_split($word)));
-            $length = strlen($word);
-            $score = ($length < 5) ? 1 : $length;
+            $letters = Word::letters($word);
+            $length = Word::length($word);
+            $score = Word::score($word);
 
             // full list of words to import
             $data[] = [
@@ -61,18 +60,6 @@ class WordSeeder extends Seeder
         }
 
         Bus::batch($jobs)->dispatch();
-    }
-
-    private function word_is_eligible(string $word)
-    {
-        // if length < 4 return false
-        $letter_count = strlen($word);
-        if($letter_count < 4) return false;
-
-        // if letter count > 7 return false
-        $unique_letters = count(array_unique(str_split($word)));
-        if($unique_letters > 7) return false;
-
-        return true;
+        
     }
 }
