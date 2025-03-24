@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Profanity; // ConsoleTVs\Profanity\Facades\Profanity;
 
 class Word extends Model
 {
@@ -19,13 +20,37 @@ class Word extends Model
 
         // attributes to determine before saving a new word to the DB
         static::creating(function($word) {
-            $word->letters = count(array_unique(str_split($word->word)));
-            $word->length = strlen($word->word);
-
-            // if it's less than 5 letters, 1 point
-            // if it's 5 or more, the length and score are the same
-            $word->score = ($word->length < 5) ? 1 : $word->length;
+            $word->letters = Word::letters($word);
+            $word->length  = Word::length($word);
+            $word->score   = Word::score($word);
         });
+    }
+
+    /**
+     * Returns the number of unique letters in the word.
+     */
+    public static function letters(string $word)
+    {
+        return count(array_unique(str_split($word)));
+    }
+
+    /**
+     * Returns the length of the word.
+     */
+    public static function length(string $word)
+    {
+        return strlen($word);
+    }
+
+    /**
+     * Returns the score of the word.
+     *
+     * 4-letter words are worth 1.
+     * All other words are worth their length.
+     */
+    public static function score(string $word)
+    {
+        return (Word::length($word) < 5) ? 1 : Word::length($word);
     }
 
     /**
@@ -42,6 +67,11 @@ class Word extends Model
 
         if ($length < 5 || $length > 15 || $unique_letters > 7) {
             return false; // Word does not meet criteria
+        }
+
+        // no swears/profanity/slurs
+        if(Profanity::blocker($word)->clean() === false) {
+            return false; // not a suitable word otherwise
         }
 
         return $word; // Word is valid and formatted
