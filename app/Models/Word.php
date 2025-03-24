@@ -65,7 +65,7 @@ class Word extends Model
         $length = Word::length($word);
         $unique_letters = Word::letters($word); // Count unique letters
 
-        if ($length < 5 || $length > 15 || $unique_letters > 7) {
+        if ($length < 4 || $length > 15 || $unique_letters > 7) {
             return false; // Word does not meet criteria
         }
 
