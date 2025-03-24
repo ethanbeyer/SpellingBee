@@ -30,6 +30,7 @@ class WordController extends Controller
         // always uppercase...
         $letters = strtoupper($letters);
         $letters_array = str_split($letters);
+        asort($letters_array);
         $word_breakdown = [];
         
         // first make sure all the letters are unique
@@ -65,6 +66,9 @@ class WordController extends Controller
                 'words' => $words_with_this_letter->pluck('word')->all()
             ];
         }
+
+        // Sort the Array by Key, Alphabetically
+        ksort($word_breakdown);
 
         // data for the view
         $data = [
